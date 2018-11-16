@@ -1,3 +1,13 @@
 {% extends 'base.html' %}
-<h1> Welcome to the Awwwards. </h1>
+{% include 'navbar.html' %}
+{% block content %}
+<h1 class = "text-center"> Welcome to the Awards</h1>
+<div class="row d-flex justify-content-center">
+    <h3>Rate Moringa School projects based on:</h3>
+    <ol>
+        <li>Design</li>
+        <li>Usability</li>
+        <li>Content</li>
+    </ol>
+</div>
 {% endblock %}
