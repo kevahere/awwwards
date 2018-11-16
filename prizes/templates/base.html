@@ -1,4 +1,4 @@
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +7,7 @@
   {% if title %}
   <title>Moringa Tribune - {{title}}</title>
   {% else %}
-    <title> Moringa Tribune </title>
+    <title> The Awwwards show </title>
   {% endif %}
 
   {% block styles %}
@@ -16,7 +16,9 @@
 
 </head>
 <body>
-    {% block content %} <h1 class='text-center'>News for {{date|date:"l d-F Y"}}</h1> {%endblock%}
+    {% block content %}
+    <h1>Look some content</h1>
+    {%endblock%}
 
     {% block scripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
