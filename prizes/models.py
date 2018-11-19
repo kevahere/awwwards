@@ -9,6 +9,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     profile_pic = models.ImageField(upload_to='profiles/')
     bio = models.CharField(max_length=250)
+    contact_info = models.CharFiels(max_length=250)
 
     @classmethod
     def get_user(cls, user):
@@ -38,25 +39,25 @@ class Project(models.Model):
     """
     class that defines the projects to be uploaded on the site
     """
-    image = models.ImageField(upload_to='images/')
-    name = models.CharField(max_length=30)
-    caption = models.CharField(max_length=100)
-    post_date = models.DateTimeField(auto_now_add=True)
-    likes = models.IntegerField(default=0)
+    title = models.CharField(max_length=30)
+    landing_page = models.ImageField(upload_to='images/')
+    description = models.CharField(max_length=100)
+    link = models.CharField(max_length=300)
+    rating = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name
 
-    def save_image(self):
+    def save_project(self):
         self.save()
 
-    def update_caption(self, update):
-        self.caption = update
+    def update_description(self, update):
+        self.description = update
         self.save()
 
     @classmethod
-    def delete_image(cls, id):
+    def delete_project(cls, id):
         to_delete = cls.objects.filter(id=id)
         to_delete.delete()
 
@@ -69,30 +70,13 @@ class Project(models.Model):
         return cls.objects.all().order_by('-id')
 
     @classmethod
-    def search_image(cls, search_term):
+    def search_project(cls, search_term):
         return cls.objects.filter(caption__icontains=search_term)
 
     @classmethod
-    def get_img_by_id(cls, ide):
-        picture = cls.objects.get(id=ide)
-        return picture
+    def get_project_by_id(cls, ide):
+        project = cls.objects.get(id=ide)
+        return project
 
 
-class Comments(models.Model):
-    """
-    class that defines the post comments
-    """
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE, default=1)
-    comment = models.CharField(max_length=250)
-    pub_time = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.name
-
-    def save_comment(self):
-        self.save()
-
-    @classmethod
-    def get_by_image(cls, id):
-        return cls.objects.filter(image=id)
+o
