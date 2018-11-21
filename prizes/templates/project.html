@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container" id = "bod">
+    <div class="row">
+        {% if project %}
+        <div class="card col-xs-9 col-sm-9 col-md-9 col-lg-9">
+            {{project.user.username}}
+            <img src="{{project.image.url}}?w=50&h=50&fit=crop" alt="Image" class="card-img-top" style="width:auto;height:500px;">
+                  {{project.post_date|timesince}} ago
+            <form action="{% url 'project' project.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form rating_form %}
+        </form>
+        </div>
+        {% else %}
+        <div class="row">
+            <h2 class="text-center">There are no images</h2>
+        </div>
+        {% endif %}
+    </div>
+    <div class="">
+        {% for rating in ratings %}
+            <p><strong>{{rating.user.username}}</strong> : {{rating.rating}}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

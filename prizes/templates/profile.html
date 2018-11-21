@@ -1,10 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html'%}
+{% load bootstrap4 %}
+{%block content%}
+<div class="container" id="bod">
+  <img src="{{profile.profile_pic.url}}" alt="{{profile.user.username}}" width="150", height="150", style="border-radius: 50%;">
+  {{user.username}}</br>
+  {{profile.bio}}
+  <a href="/logout">Logout</a>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">
+  Edit profile
+</button>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPostModal">
+  Upload Image
+</button>
+  <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="profileLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="profileLabel">Edit {{profile.user.username}}'s profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'profile'%}" method="post" enctype="multipart/form-data">
+          {%csrf_token%}
+          {% bootstrap_form profile_form%}
+          <input type="submit" class="btn btn-success btn-lg" value="Update">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-</body>
-</html>
+  <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="postLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="postLabel">New post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'profile'%}" method="post" enctype="multipart/form-data">
+          {%csrf_token%}
+          {% bootstrap_form upload_form%}
+          <input type="submit" class="btn btn-success btn-lg" value="Post">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="row">
+    {% for pic in pics%}
+    <!--Displaying the projectss-->
+    <div class="card col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <img class="card-img-top" src="{{pic.image.url}}" alt="Image">
+
+    </div>
+
+    {% empty %}
+    <div class="row">
+      <h2 class="text-center">There are No projectss</h2>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{%endblock%}
