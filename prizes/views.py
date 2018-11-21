@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 
 def index(request):
     projects = Project.get_all()
-    return render(request, 'index.html', {'pics': pics})
+    return render(request, 'index.html', {'projects': projects})
 
 
 @login_required(login_url='/accounts/login/')
