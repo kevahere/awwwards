@@ -9,7 +9,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     profile_pic = models.ImageField(upload_to='profiles/')
     bio = models.CharField(max_length=250)
-    contact_info = models.CharFiels(max_length=250)
+    contact_info = models.CharField(max_length=250)
 
     @classmethod
     def get_user(cls, user):
@@ -79,4 +79,21 @@ class Project(models.Model):
         return project
 
 
-o
+class Ratings(models.Model):
+    """
+    class that defines the post comments
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
+    rating = models.IntegerField()
+    pub_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    def save_rating(self):
+        self.save()
+
+    @classmethod
+    def get_by_project(cls, id):
+        return cls.objects.filter(image=id)
