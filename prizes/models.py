@@ -47,7 +47,7 @@ class Project(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
-        return self.name
+        return self.title
 
     def save_project(self):
         self.save()
@@ -89,7 +89,7 @@ class Ratings(models.Model):
     pub_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.project
 
     def save_rating(self):
         self.save()
