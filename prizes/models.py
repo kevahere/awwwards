@@ -65,6 +65,7 @@ class Project(models.Model):
     def get_by_user(cls, id):
         return cls.objects.filter(user=id)
 
+
     @classmethod
     def get_all(cls):
         return cls.objects.all().order_by('-id')
