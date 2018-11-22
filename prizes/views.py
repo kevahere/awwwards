@@ -13,8 +13,8 @@ def index(request):
 @login_required(login_url='/accounts/login/')
 def profile(request):
     user = request.user
-    profiles = Profile.get_user(user.id)
     projects = Project.get_all()
+    profiles = Profile.get_user(user.id)
     if profiles:
         profile = profiles[len(profiles)-1]
     else:
