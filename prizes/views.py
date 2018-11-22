@@ -14,7 +14,7 @@ def index(request):
 def profile(request):
     user = request.user
     profiles = Profile.get_user(user.id)
-    # projects = Project.get_by_user(user.id)
+    projects = Project.get_all()
     if profiles:
         profile = profiles[len(profiles)-1]
     else:
@@ -40,7 +40,7 @@ def profile(request):
         profile_form = UpdateProfile()
         upload_form = PostProjectForm()
         rating_form = RatingsForm
-    return render(request, 'profile.html', {'user': user, 'profile': profile,'profile_form': profile_form,
+    return render(request, 'profile.html', {'user': user,'projects' : projects, 'profile': profile,'profile_form': profile_form,
                                             'upload_form': upload_form, 'rating_form': rating_form})
 
 
@@ -52,7 +52,7 @@ def search_results(request):
         search_prof = Profile.search_profiles(search_term)
         message = f'{search_term}'
 
-        return render(request, 'search.html', {'message': message, 'pics': search_projects, 'profiles': search_prof})
+        return render(request, 'search.html', {'message': message, 'projects': search_projects, 'profiles': search_prof})
 
     else:
         message = "You haven't searched for any term"
