@@ -1,12 +1,21 @@
-{% extends 'base.html' %}
-{% block content %}
-<h1 class = "text-center"> Welcome to the Awards</h1>
-<div class="row d-flex justify-content-center">
-    <h3>Rate Moringa School projects based on:</h3>
-    <ol>
-        <li>Design</li>
-        <li>Usability</li>
-        <li>Content</li>
-    </ol>
+{% extends 'base.html'%}
+{% load bootstrap4 %}
+{%block content%}
+<div class="container" id="bod">
+  <div class="row d-flex justify-content-center">
+    {% for project in projects%}
+    <!--Displaying the pictures-->
+    <div style='margin-top:50px; margin-bottom:50px;' class="card col-xs-9 col-sm-9 col-md-9 col-lg-9 ">
+      {{project.user.username}}
+        {{project.title}}
+      <a href="{% url 'project' project.id %}"><img class="card-img-top mp-8 mp-8" src="{{project.landing_page.url}}" alt="Image"></a>
+
+    </div>
+    {% empty %}
+    <div class="row">
+      <h2 class="text-center">There are No Projects</h2>
+    </div>
+    {% endfor %}
+  </div>
 </div>
-{% endblock %}
+{%endblock%}

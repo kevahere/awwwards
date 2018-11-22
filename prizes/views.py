@@ -13,7 +13,7 @@ def index(request):
 @login_required(login_url='/accounts/login/')
 def profile(request):
     user = request.user
-    projects = Project.get_all()
+    projects = Project.get_by_user(user.id)
     profiles = Profile.get_user(user.id)
     if profiles:
         profile = profiles[len(profiles)-1]
@@ -33,14 +33,14 @@ def profile(request):
             profile.save_profile()
             return HttpResponseRedirect('/profile')
         if upload_form.is_valid():
-            Project = upload_form.save(commit=False)
-            Project.user = user
-            Project.save_Project()
+            project = upload_form.save(commit=False)
+            project.user = user
+            project.save_project()
     else:
         profile_form = UpdateProfile()
         upload_form = PostProjectForm()
         rating_form = RatingsForm
-    return render(request, 'profile.html', {'user': user,'projects' : projects, 'profile': profile,'profile_form': profile_form,
+    return render(request, 'profile.html', {'user': user, 'profile': profile,"projects":projects,'profile_form': profile_form,
                                             'upload_form': upload_form, 'rating_form': rating_form})
 
 
