@@ -1,3 +1,4 @@
 *.pyc
 virtual/
 .idea/
+.env
