@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Project
+from .models import Profile, Project,Ratings
 from .forms import UpdateProfile, PostProjectForm, RatingsForm
 from django.http import HttpResponseRedirect
 
@@ -60,14 +60,15 @@ def search_results(request):
 
 @login_required(login_url='/accounts/login/')
 def single_project(request, project):
-    ratings = Ratings.get_by_project()
+    user = request.user
+    ratings = Ratings.get_by_project(project)
     project = Project.get_project_by_id(project)
     if request.method == 'POST':
         rating_form = RatingsForm(request.POST)
         if rating_form.is_valid():
             rating = rating_form.save(commit=False)
             rating.user = user
-            rating.Project = picture
+            rating.Project = project
             rating.save()
             return redirect('project', project.id)
     else:

@@ -84,10 +84,11 @@ class Ratings(models.Model):
     """
     class that defines the post comments
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+
     project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
     rating = models.IntegerField()
     pub_time = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.project
@@ -97,4 +98,4 @@ class Ratings(models.Model):
 
     @classmethod
     def get_by_project(cls, id):
-        return cls.objects.filter(image=id)
+        return cls.objects.filter(project=id)
