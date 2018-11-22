@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Profile,Project, Ratings
+from .models import Profile, Project
 from .forms import UpdateProfile, PostProjectForm, RatingsForm
 from django.http import HttpResponseRedirect
 
@@ -14,7 +14,7 @@ def index(request):
 def profile(request):
     user = request.user
     profiles = Profile.get_user(user.id)
-    projects = Project.get_by_user()
+    # projects = Project.get_by_user(user.id)
     if profiles:
         profile = profiles[len(profiles)-1]
     else:
@@ -40,7 +40,7 @@ def profile(request):
         profile_form = UpdateProfile()
         upload_form = PostProjectForm()
         rating_form = RatingsForm
-    return render(request, 'registration/profile.html', {'user': user, 'profile': profile,"projects":projects,'pics': pics, 'profile_form': profile_form,
+    return render(request, 'profile.html', {'user': user, 'profile': profile,'profile_form': profile_form,
                                             'upload_form': upload_form, 'rating_form': rating_form})
 
 
