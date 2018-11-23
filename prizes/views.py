@@ -1,3 +1,6 @@
+from rest_framework.response import Response
+from rest_framework.views import APIView
+ffrom .serializer import ProjectSerializer
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Project,Ratings
@@ -75,3 +78,10 @@ def single_project(request, project):
         rating_form = RatingsForm()
 
     return render(request, 'project.html', {'rating_form': rating_form, 'project': project, 'user': user, 'ratings': ratings})
+
+
+class ProjectList(APIView):
+    def get(self,request,format=None):
+        all_projects = Project.objects.all()
+        serializers = ProjectSerializer(all_projects,many=True)
+        return Response(serializers.data)
