@@ -86,7 +86,9 @@ class Ratings(models.Model):
     """
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
-    rating = models.IntegerField()
+    design = models.PositiveIntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=1)
+    usability = models.PositiveIntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=1)
+    content = models.PositiveIntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=1)
     pub_time = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
