@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializer import ProjectSerializer
+      from .serializer import ProjectSerializer
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Project,Ratings
@@ -64,6 +64,7 @@ def search_results(request):
 @login_required(login_url='/accounts/login/')
 def single_project(request, project):
     user = request.user
+    rating = round(((project.design + project.usability + project.content)/3),2)
     ratings = Ratings.get_by_project(project)
     project = Project.get_project_by_id(project)
     if request.method == 'POST':
@@ -77,7 +78,7 @@ def single_project(request, project):
     else:
         rating_form = RatingsForm()
 
-    return render(request, 'project.html', {'rating_form': rating_form, 'project': project, 'user': user, 'ratings': ratings})
+    return render(request, 'project.html', {'rating_form': rating_form, 'project': project, 'user': user, 'ratings': ratings, 'rating': rating})
 
 
 class ProjectList(APIView):
