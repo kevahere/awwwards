@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-ffrom .serializer import ProjectSerializer
+from .serializer import ProjectSerializer
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Project,Ratings
